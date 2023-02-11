@@ -51,3 +51,14 @@ def create_user(user_id: int, user_details: User):
     else:
         user[user_id] = user_details
         return user[user_id]
+
+
+# PUT methord
+
+@app.put("/update_user/{user_id}")
+def update_user(user_id: int, user_details: User):
+    if user_id not in user:
+        return {"error_msg": "User does not exist"}
+    else:
+        user[user_id] = user_details
+        return user[user_id]
