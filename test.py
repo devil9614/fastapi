@@ -12,11 +12,15 @@ user = {
     }
 }
 
+# BaseModal create to store the user modal
+
 
 class User(BaseModel):
     name: str
     age: int
     location: str
+
+# GET methord
 
 
 @app.get("/")
@@ -28,6 +32,7 @@ def index():
 # def get_user(user_id: int = Path(None, description="Needs the id of the user")):
 #     return user[user_id]
 
+# Query Params
 
 @app.get("/user/{user_id}")
 def get_admin(user_id: int, admin: Optional[str] = None):
@@ -36,6 +41,8 @@ def get_admin(user_id: int, admin: Optional[str] = None):
     else:
         return {"error_msg": "You need to be an admin"}
 
+
+# POST methord
 
 @app.post("/create_user/{user_id}")
 def create_user(user_id: int, user_details: User):
