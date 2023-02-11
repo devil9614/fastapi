@@ -43,7 +43,10 @@ def index():
 @app.get("/user/{user_id}")
 def get_admin(user_id: int, admin: Optional[str] = None):
     if admin == "True":
-        return user[user_id]
+        if user_id in user:
+            return user[user_id]
+        else:
+            return {"message": "User not found"}
     else:
         return {"error_msg": "You need to be an admin"}
 
@@ -71,3 +74,13 @@ def update_user(user_id: int, user_details: UserOptional):
             user[user_id][key] = value
 
     return user[user_id]
+
+
+# Delete methord
+
+@app.delete("/delete_user/{user_id}")
+def delete_user(user_id: int):
+    if user_id not in user:
+        return {"error_msg": "User does not exist"}
+    del user[user_id]
+    return {"message": "User deleted"}
