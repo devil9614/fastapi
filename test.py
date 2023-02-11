@@ -20,6 +20,12 @@ class User(BaseModel):
     age: int
     location: str
 
+
+class UserOptional(BaseModel):
+    name: Optional[str] = None
+    age: Optional[int] = None
+    location: Optional[str] = None
+
 # GET methord
 
 
@@ -56,9 +62,12 @@ def create_user(user_id: int, user_details: User):
 # PUT methord
 
 @app.put("/update_user/{user_id}")
-def update_user(user_id: int, user_details: User):
+def update_user(user_id: int, user_details: UserOptional):
     if user_id not in user:
         return {"error_msg": "User does not exist"}
-    else:
-        user[user_id] = user_details
-        return user[user_id]
+
+    for key, value in user_details.__dict__.items():
+        if value is not None:
+            user[user_id][key] = value
+
+    return user[user_id]
